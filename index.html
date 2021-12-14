@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watercolor</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Load a font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- import Vue -->
+    <script src='https://cdn.jsdelivr.net/npm/vue'></script>
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+</head>
+
+<body>
+
+
+    <!-- The Slider -->
+    <div class="content">
+        <h1 style="text-align: center; margin: 5%;">ICELAND</h1>
+
+        <div id="app">
+            <div>
+                <img v-bind:src="slides[nowIndex].src" alt="slides[nowIndex].alt" width="100%" @mouseover=goto(preIndex) @mouseleave=goto(nextIndex)>
+            </div>
+
+            <ul class="slide-pages">
+                <li class="fa fa-long-arrow-left" @click="goto(preIndex)"></li>
+                <li v-for="(item, index) in slides" @click=goto(index)>
+                    <a> {{index + 1}}</a>
+                </li>
+                <li class="fa fa-long-arrow-right" @click="goto(nextIndex)"></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue ({
+            el: '#app',
+            data(){
+                return{
+                    nowIndex:0,
+                    slides: [
+                        {src: "IMG_0013.JPG", 
+                        alt: "River dat nightfall"
+                        },
+                        {src: "IMG_0014.JPG",
+                        alt: "Hill and forest at nightfall"
+                        },
+                        {src: "IMG_0015.JPG",
+                        alt: "House at nightfall"
+                        },
+                        {src: "IMG_0016.JPG",
+                        alt: "Beach in Iceland"
+                        },
+                    ]
+                }
+            },
+            computed:{
+                preIndex(){
+                    if(this.nowIndex === 0){
+                        return this.slides.length -1;
+                    }else {
+                        return this.nowIndex -1;
+                    }
+                },
+                nextIndex(){
+                    if(this.nowIndex === this.slides.length-1) {
+                        return 0;
+                    }else{
+                        return this.nowIndex +1;
+                    }
+                }
+            },
+            methods:{
+                goto(index) {
+                    this.nowIndex = index;
+                },
+            }
+        })
+    </script>
+
+</body>
+</html>
